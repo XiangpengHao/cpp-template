@@ -11,7 +11,7 @@ pool:
 
 steps:
 - script: docker build -t cpp_project .  # add options to this command to meet your needs
-  displayName: 'build the code'
+  displayName: 'Build the code'
 
 - script: docker run cpp_project
   displayName: 'Run tests'
