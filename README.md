@@ -2,10 +2,12 @@
 
 [![Build Status](https://dev.azure.com/xha62/xha62/_apis/build/status/HaoPatrick.cpp-bootstrap?branchName=master)](https://dev.azure.com/xha62/xha62/_build/latest?definitionId=2&branchName=master)
 
-> this language (C++) has many dark corner, stupid conventions, implicit conversion and not mention UB 
-> -- [Wojciech Muła](http://0x80.pl/notesen/2015-05-25-tricky-mistake.html) 
+> this language (C++) has many dark corner, stupid conventions, implicit conversion and not mention UB
+> -- [Wojciech Muła](http://0x80.pl/notesen/2015-05-25-tricky-mistake.html)
 
 Context: my research focus is high performance computing
+
+You might also like: https://www.rust-lang.org. My intuition is unless your daily routine is to perf code line-by-line, calcuate each cache use, measure every memory hit; you should consider rust-lang.
 
 ## Features
 
