@@ -1,14 +1,19 @@
-#include <glog/logging.h>
-#include <gtest/gtest.h>
+#include <spdlog/spdlog.h>
 #include <map>
 #include <random>
 
-GTEST_TEST(SmokeTest, SmokeTest) {
-  LOG(INFO) << "running tests" << std::endl;
-  ASSERT_TRUE(true);
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do
+                           // this in one cpp file
+#include "catch.hpp"
+
+unsigned int Factorial(unsigned int number) {
+  return number <= 1 ? number : Factorial(number - 1) * number;
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+TEST_CASE(SmokeTest, SmokeTest) {
+  SPDLOG_INFO("running tests");
+  REQUIRE(true);
+  REQUIRE(Factorial(1) == 1);
+  REQUIRE(Factorial(2) == 2);
+  REQUIRE(Factorial(3) == 6);
 }
