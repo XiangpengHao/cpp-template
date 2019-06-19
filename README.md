@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/xha62/xha62/_apis/build/status/HaoPatrick.cpp-bootstrap?branchName=master)](https://dev.azure.com/xha62/xha62/_build/latest?definitionId=2&branchName=master)
 
-Context: My research focus is high performance computing
+Context: my research focus is high performance computing
 
 ## Features
 
@@ -19,3 +19,11 @@ Context: My research focus is high performance computing
 - CI included
 
 - Clang-format: Google style
+
+## Build
+
+```bash
+mkdir build && cd build
+cmake -DCMAKE_BUILD_TYPE={Debug|Release} ..
+make -j
+```
