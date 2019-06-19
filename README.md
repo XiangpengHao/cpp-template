@@ -1,4 +1,4 @@
-# Template to setup C++ research projects
+# Template to bootstrap C++ research projects
 
 Context: My research focus is high performance computing
 
