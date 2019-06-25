@@ -38,7 +38,18 @@ if (NOT googletest_POPULATED)
 endif ()
 include(GoogleTest)
 
-find_package(spdlog REQUIRED)
+# Google Log
+FetchContent_Declare(
+        glog
+        GIT_REPOSITORY https://github.com/google/glog.git
+        GIT_TAG v0.4.0
+)
+FetchContent_GetProperties(glog)
+if (NOT glog_POPULATED)
+  FetchContent_Populate(glog)
+  set(WITH_GFLAGS OFF CACHE BOOL "we don't want gflags")
+  add_subdirectory(${glog_SOURCE_DIR} ${glog_BINARY_DIR})
+endif ()
 
 enable_testing()
 

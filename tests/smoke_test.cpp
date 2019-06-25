@@ -1,10 +1,11 @@
+#include <glog/logging.h>
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
 #include <map>
 #include <random>
 
 GTEST_TEST(SmokeTest, SmokeTest) {
-  SPDLOG_INFO("running tests");
+  LOG(INFO) << "running tests";
   ASSERT_TRUE(true);
 }
 

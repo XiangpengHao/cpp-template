@@ -11,9 +11,9 @@ You might also like: https://www.rust-lang.org. My intuition is unless your dail
 
 ## Features
 
-- GTest + Spdlog
+- GTest + GLog
 
-- Modern CMake
+- Modern CMake, keep compile time in mind 
 
 - C++ 17
 
