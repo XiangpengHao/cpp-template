@@ -1,6 +1,5 @@
 #include <glog/logging.h>
 #include <gtest/gtest.h>
-#include <spdlog/spdlog.h>
 #include <map>
 #include <random>
 
