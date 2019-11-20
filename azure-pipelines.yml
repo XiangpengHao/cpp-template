@@ -16,6 +16,6 @@ steps:
 - script: docker run cpp_project
   displayName: 'Run tests'
 
-- script: docker run cpp_project
+- script: docker rmi cpp_project
   displayName: 'Clean resources'
   condition: always()
