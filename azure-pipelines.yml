@@ -9,29 +9,25 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: build
-  steps:
-    - script: docker build -t template .
 
-- job: test
-  dependsOn: build
-  steps:
-    - script: docker run --name=template-test template 
-      displayName: 'run the tests'
+steps:
+  - script: docker build -t template .
+    displayName: 'build the code'
+  - script: docker run --name=template-test template 
+    displayName: 'run the tests'
 
-    - script: docker cp tepmlate-test:/usr/src/template/build_tmp/Testing .
-      displayName: 'copy the test results'
-    
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'CTest'
-        testResultsFiles: '**/Testing/*/Test.xml'
+  - script: docker cp tepmlate-test:/usr/src/template/build_tmp/Testing .
+    displayName: 'copy the test results'
+  
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'CTest'
+      testResultsFiles: '**/Testing/*/Test.xml'
 
-    - script: docker rm template-test 
-      displayName: 'clean the image'
-      condition: always()
+  - script: docker rm template-test 
+    displayName: 'clean the image'
+    condition: always()
 
-    - script: docker rmi template --force
-      displayName: 'clean the container'
-      condition: always()
+  - script: docker rmi template --force
+    displayName: 'clean the container'
+    condition: always()
