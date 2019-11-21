@@ -15,6 +15,7 @@ jobs:
     - script: docker build -t template .
 
 - job: test
+  dependsOn: build
   steps:
     - script: docker run --name=template-test template 
       displayName: 'run the tests'
