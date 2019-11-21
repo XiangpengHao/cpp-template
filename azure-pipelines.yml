@@ -16,7 +16,7 @@ steps:
   - script: docker run --name=template-test template 
     displayName: 'run the tests'
 
-  - script: docker cp tepmlate-test:/usr/src/template/build_tmp/Testing .
+  - script: docker cp template-test:/usr/src/template/build_tmp/Testing .
     displayName: 'copy the test results'
   
   - task: PublishTestResults@2
