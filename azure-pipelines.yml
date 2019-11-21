@@ -9,13 +9,32 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: docker build -t cpp_project .  # add options to this command to meet your needs
-  displayName: 'Build the code'
+stages:
+- stage: Build
+  jobs:
+  - job: build_cpp
+    steps:
+      - script: docker build -t template .
 
-- script: docker run cpp_project
-  displayName: 'Run tests'
+- stage: Test
+  jobs:
+  - job: test_all
+    steps:
+      - script: docker run --name=template-test template 
+        displayName: 'run the tests'
 
-- script: docker rmi cpp_project
-  displayName: 'Clean resources'
-  condition: always()
+      - script: docker cp tepmlate-test:/usr/src/template/build_tmp/Testing .
+        displayName: 'copy the test results'
+      
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'CTest'
+          testResultsFiles: '**/Testing/*/Test.xml'
+
+      - script: docker rm template-test 
+        displayName: 'clean the image'
+        condition: always()
+
+      - script: docker rmi template --force
+        displayName: 'clean the container'
+        condition: always()
