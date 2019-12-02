@@ -24,6 +24,9 @@ steps:
       testResultsFormat: 'CTest'
       testResultsFiles: '**/Testing/*/Test.xml'
 
+  - script: |
+      git clone --depth 1 -b gh-pages https://$(GITHUB_TOKEN)@github.com/XiangpengHao/cpp-template.git gh-pages
+
   - script: docker rm template-test-$(Build.BuildId) 
     displayName: 'clean the image'
     condition: always()
