@@ -9,7 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-
 steps:
   - script: docker build -t template_$(Build.BuildId) .
     displayName: 'build the code'
@@ -25,7 +24,21 @@ steps:
       testResultsFiles: '**/Testing/*/Test.xml'
 
   - script: |
-      git clone --depth 1 -b gh-pages https://$(GITHUB_TOKEN)@github.com/XiangpengHao/cpp-template.git gh-pages
+      git clone --depth 1 -b gh-pages https://$GH_TOKEN@github.com/XiangpengHao/cpp-template.git gh-pages
+      cat $GH_TOKEN
+      echo $(Build.SourceVersion) $(Build.BuildId) 100 > ./public/bench_data
+      cp ./gh-pages/data.json ./public/
+      cp ./public/* ./gh-pages
+      cd gh-pages 
+      python3 ./data_process.py
+      git config user.email "ci@haoxp.xyz"
+      git config user.name "cibot"
+      git add .
+      git commit -m"update benchmark result"
+      git push origin gh-pages --force
+
+    env:
+      GH_TOKEN: $(GITHUB_TOKEN)
 
   - script: docker rm template-test-$(Build.BuildId) 
     displayName: 'clean the image'
