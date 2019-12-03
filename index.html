@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>Continuos Benchmark</title>
+    <!--[if IE]><link rel="shortcut icon" href="/static/img/icons/favicon.ico"><![endif]-->
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+
+        <div id="main" style="width: 600px;height:400px;"></div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@4.4.0/dist/echarts.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: ''
+        }
+    })
+</script>
+
+<script async>
+    async function fetchData(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        return data
+    }
+
+    let myChart = echarts.init(document.getElementById('main'));
+
+    (async () => {
+        const benchmark = await fetchData("data.json");
+        option = {
+            title: {
+                text: `${benchmark.project} - Continuos Benchmark`,
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    animation: true
+                },
+                formatter: function (params) {
+                    const dataPoint = benchmark.data[params[0].dataIndex];
+                    return `Throughput: ${dataPoint.dataPoint}<br/>
+                    Git Tag: ${dataPoint.gitTag}<br/>
+                    BuildID: ${dataPoint.buildId}`;
+                    // console.log(params);
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {
+                        show: true,
+                        title: 'Data View'
+                    },
+                    restore: {
+                        title: 'reset'
+                    },
+                    saveAsImage: {
+                        title: 'save',
+                        show: true
+                    }
+                }
+            },
+            dataZoom: [
+                {
+                    id: 'dataZoomX',
+                    type: 'slider',
+                    xAxisIndex: [0],
+                    filterMode: 'filter'
+                }],
+            xAxis: {
+                type: 'category',
+                name: "Build ID",
+                data: benchmark.data.map(x => x.buildId)
+            },
+            yAxis: {
+                type: 'value',
+                name: "Throughput"
+            },
+            series: [{
+                data: benchmark.data.map(x => x.dataPoint),
+                type: 'line',
+                name: 'bench'
+            }]
+        };
+        myChart.setOption(option);
+        myChart.on('click', { seriesName: 'bench' }, function (param) {
+            window.open(benchmark.ciEndpoint + param.name, "_blank");
+        });
+    })();
+</script>
+
+<script src="main.js"></script>
+
+</html>
