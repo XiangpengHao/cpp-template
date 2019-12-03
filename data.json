@@ -1,1 +1,1 @@
-{"ciEndpoint": "https://patrick-website.visualstudio.com/cpp-template/_build/results?buildId=", "data": [{"gitTag": "47aebad", "buildId": 29, "dataPoint": 100}], "project": "cpp-template"}
+{"ciEndpoint": "https://patrick-website.visualstudio.com/cpp-template/_build/results?buildId=", "project": "cpp-template", "data": [{"buildId": 29, "gitTag": "47aebad", "dataPoint": 100}, {"buildId": 30, "gitTag": "037c5", "dataPoint": 100}]}

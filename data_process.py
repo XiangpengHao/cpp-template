@@ -11,7 +11,7 @@ def process():
             lines = lines.split(' ')
 
         data['data'].append({
-            'gitTag': lines[0],
+            'gitTag': lines[0][:5],
             'buildId': int(lines[1]),
             'dataPoint': int(lines[2])
         })
